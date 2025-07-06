@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Regis() {
+function Write() {
   return (
     <div>
       <h1>🔍 임시보호 동물 등록하기</h1>
@@ -9,4 +9,4 @@ function Regis() {
   );
 }
 
-export default Regis;
+export default Write;
