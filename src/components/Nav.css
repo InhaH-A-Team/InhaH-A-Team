@@ -1,0 +1,41 @@
+.nav-container {
+  position: fixed;            
+  top: 0;                     
+  left: 0;
+  right: 0;
+  z-index: 1000;      
+
+  font-family: "Katibeh", serif;
+  font-style: normal;
+
+  background-color: #716A5C;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  height:60px;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;  
+}
+
+.nav-logo {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #F9F8F6;
+  text-decoration: none;
+}
+
+.nav-item {
+  margin-left: 4rem;
+  font-size: 2rem;
+  color: #F9F8F6;
+  text-decoration: none;
+}
+
+.nav-item:hover, .nav-logo:hover {
+  color:#C3BCA3;
+}
