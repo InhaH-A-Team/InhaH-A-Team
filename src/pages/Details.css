@@ -1,0 +1,93 @@
+/* 전체 배경 */
+.details-container {
+  background: #ECEAE4;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+/* 내부 컨테이너 */
+.details-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  color: #3F3F3F;
+}
+
+/* 제목 */
+.details-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 32px;
+  margin-bottom: 20px;      /* 아래 박스와 간격 */
+  color: #3F3F3F;
+  background: #fff;
+  border-radius: 20px;      /* 더 얇게 */
+  padding: 8px 24px;        /* 더 얇게 */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 본문 영역 2단 */
+.details-content-row {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 12px;      /* 아래 박스와 간격 */
+}
+
+/* 왼쪽(이미지+정보) */
+.details-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;                /* 이미지/정보 간격 */
+  min-width: 220px;
+}
+
+/* 이미지 미리보기 */
+.details-image-preview {
+  width: 220px;
+  height: 180px;
+  background: #F6F5F3;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A0A0A0;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+/* 정보 박스 */
+.details-info {
+  background: #C3BCA3;
+  border-radius: 32px;
+  padding: 28px 20px;
+  color: #3F3F3F;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 오른쪽 본문 */
+.details-main-content {
+  flex: 1;
+  background: #F6F5F3;
+  border-radius: 32px;
+  padding: 32px;
+  min-height: 220px;
+  color: #3F3F3F;
+}
+
+/* 댓글 */
+.details-comment {
+  background: #F6F5F3;
+  border-radius: 24px;
+  padding: 16px;
+  margin-bottom: 20px;
+  color: #3F3F3F;
+  transition: background 0.2s;
+}
+
+.details-comment:hover {
+  background: #C3BCA3;
+}
