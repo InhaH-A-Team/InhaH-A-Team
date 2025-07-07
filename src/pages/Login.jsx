@@ -1,9 +1,11 @@
 import React from 'react';
-
+import Nav from '../components/Nav'
+import Loginform from '../components/Loginform'
 function Login() {
   return (
     <div>
-      <h1>Login</h1>
+      <Nav/>
+      <Loginform/>
     </div>
   );
 }
