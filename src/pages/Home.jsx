@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './Home.css';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import './Details.css';
 import Nav from '../components/Nav';
-import AnimalCard from '../components/AnimalCard';
 
 const mockData = [
   { id: 1, title: '2살 수컷 고양이 분양합니다', type: '고양이', region: '서울', gender: '수컷', age: 2 },
@@ -14,81 +14,47 @@ const mockData = [
   { id: 8, title: '6살 암컷 강아지 분양합니다', type: '강아지', region: '제주도', gender: '암컷', age: 6 },
 ];
 
-const categories = {
-  type: ['강아지', '고양이', '기타'],
-  region: ['서울', '인천', '제주도', '경상도', '전라도', '경기도', '강원도', '부산', '대구', '광주', '대전', '세종'],
-  gender: ['수컷', '암컷'],
-  age: ['0-3', '4-9', '9+'],
-};
+function Details() {
+  const { id } = useParams();
+  const animal = mockData.find((item) => String(item.id) === id);
 
-function Home() {
-  const [filters, setFilters] = useState({
-    type: [],
-    region: [],
-    gender: [],
-    age: [],
-  });
-
-  const handleCheck = (category, value) => {
-    setFilters((prev) => {
-      const exists = prev[category].includes(value);
-      const newValues = exists
-        ? prev[category].filter((v) => v !== value)
-        : [...prev[category], value];
-      return { ...prev, [category]: newValues };
-    });
-  };
-
-  const isAgeInRange = (age, range) => {
-    if (range === '0-3') return age <= 3;
-    if (range === '4-9') return age >= 4 && age <= 9;
-    if (range === '9+') return age >= 9;
-    return true;
-  };
-
-  const filteredData = mockData.filter((item) => {
-    const { type, region, gender, age } = filters;
-    const ageMatches = age.length === 0 || age.some((range) => isAgeInRange(item.age, range));
+  if (!animal) {
     return (
-      (type.length === 0 || type.includes(item.type)) &&
-      (region.length === 0 || region.includes(item.region)) &&
-      (gender.length === 0 || gender.includes(item.gender)) &&
-      ageMatches
+      <div className="details-container">
+        <Nav />
+        <div className="details-inner">
+          <div className="details-title">존재하지 않는 게시글입니다.</div>
+        </div>
+      </div>
     );
-  });
+  }
 
   return (
-    <div>
+    <div className="details-container">
       <Nav />
-      <div className="home-container">
-        <div className="filter-box">
-          {Object.entries(categories).map(([key, options]) => (
-            <div className="filter-group" key={key}>
-              <span className="filter-title">{key.toUpperCase()}</span>
-              <div className="filter-options">
-                {options.map((option) => (
-                  <label key={option}>
-                    <input
-                      type="checkbox"
-                      checked={filters[key].includes(option)}
-                      onChange={() => handleCheck(key, option)}
-                    />
-                    {option}
-                  </label>
-                ))}
-              </div>
+      <div className="details-inner">
+        <div className="details-title">{animal.title}</div>
+        <div className="details-content-row">
+          <div className="details-left">
+            <div className="details-image-preview">
+              이미지<br />미리보기
             </div>
-          ))}
+            <div className="details-info">
+              <div>나이: {animal.age}살</div>
+              <div>성별: {animal.gender}</div>
+              <div>종: {animal.type}</div>
+              <div>지역: {animal.region}</div>
+            </div>
+          </div>
+          <div className="details-main-content">
+            {/* 본문 내용이 들어갑니다 */}
+          </div>
         </div>
-
-        <div className="card-grid">
-          {filteredData.map((animal) => (
-            <AnimalCard key={animal.id} animal={animal} />
-          ))}
-        </div>
+        <div className="details-comment">댓글1</div>
+        <div className="details-comment">댓글2</div>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default Details;
