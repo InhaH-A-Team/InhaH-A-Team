@@ -2,6 +2,7 @@ import React from 'react';
 import './FavoriteDropdown.css';
 
 function FavoriteDropdown({ onClose, style }) {
+  // API 연동 시 서버에서 즐겨찾기 리스트 받아오기
   const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
   return (

@@ -5,11 +5,13 @@ function FavoriteButton({ animal }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
+    // API 연동 시 서버에서 즐겨찾기 여부 받아오기
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     setIsFavorite(favorites.some(item => item.id === animal?.id));
   }, [animal]);
 
   const handleToggleFavorite = () => {
+    // API 연동 시 서버에 즐겨찾기 추가 및 삭제 요청
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     if (isFavorite) {
       const newFavorites = favorites.filter(item => item.id !== animal.id);
