@@ -115,6 +115,10 @@
   transition: background 0.2s;
 }
 
+.no-comments {
+  margin-bottom: 12px;
+}
+
 .details-comment:hover {
   background: #C3BCA3;
 }
