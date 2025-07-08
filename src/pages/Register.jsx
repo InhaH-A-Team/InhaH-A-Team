@@ -1,10 +1,11 @@
 import React from 'react';
 import Registform from '../components/Registform'
-
+import Nav from '../components/Nav'
 function Register() {
   return (
     <div>
-      <h1>Registform</h1>
+      <Nav/>
+      <Registform/>
     </div>
   );
 }
