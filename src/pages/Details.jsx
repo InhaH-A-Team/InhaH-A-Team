@@ -6,6 +6,7 @@ import CommentForm from '../components/CommentForm';
 import CommentList from '../components/CommentList';
 import FavoriteButton from '../components/FavoriteButton';
 
+// 추후 API 연동시 서버 데이터로 대체
 const mockData = [
   { id: 1, title: '2살 수컷 고양이 분양합니다', type: '고양이', region: '서울', gender: '수컷', age: 2 },
   { id: 2, title: '4살 암컷 강아지 분양합니다', type: '강아지', region: '경기도', gender: '암컷', age: 4 },
@@ -19,9 +20,11 @@ const mockData = [
 
 function Details() {
   const { id } = useParams();
+
+  // API 연동 시 animal을 서버에서 받아온 데이터로 설정
   const animal = mockData.find((item) => String(item.id) === id);
 
-  // 댓글을 localStorage에서 불러오기
+  // API 연동 시 댓글도 서버에서 받아오고, 저장 및 삭제도 서버로 요청
   const getStoredComments = () => {
     const saved = localStorage.getItem(`comments_${id}`);
     return saved ? JSON.parse(saved) : [];
@@ -29,12 +32,13 @@ function Details() {
 
   const [comments, setComments] = useState(getStoredComments);
 
-  // 댓글이 바뀔 때마다 localStorage에 저장
   useEffect(() => {
+    // API 연동 시 서버로 댓글 저장 요청
     localStorage.setItem(`comments_${id}`, JSON.stringify(comments));
   }, [comments, id]);
 
   const handleAddComment = (text) => {
+    // API 연동 시 서버로 댓글 추가 요청
     setComments(prev => [
       ...prev,
       { id: Date.now(), text }
@@ -42,6 +46,7 @@ function Details() {
   };
 
   const handleDeleteComment = (commentId) => {
+    // API 연동 시 서버로 댓글 삭제 요청
     setComments(prev => prev.filter(comment => comment.id !== commentId));
   };
 
@@ -77,7 +82,7 @@ function Details() {
             </div>
           </div>
           <div className="details-main-content">
-            {/* 본문 내용이 들어갑니다 */}
+            {/* API 연동 시 본문 내용 받아와서 출력 */}
           </div>
         </div>
         <div className="comments-box">
@@ -86,7 +91,6 @@ function Details() {
           ) : (
             <CommentList comments={comments} onDelete={handleDeleteComment} />
           )}
-          {/* 댓글 입력 폼을 리스트 아래로 이동 */}
           <CommentForm onAdd={handleAddComment} />
         </div>
         
