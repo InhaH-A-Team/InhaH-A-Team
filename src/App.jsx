@@ -6,12 +6,13 @@ import MyPage from './pages/MyPage';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Register from './pages/Register';
-
+import About from './pages/About'
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/Register" element={<Register />} />        
+        <Route path="/Register" element={<Register />} /> 
+        <Route path="/about" element={<About />} />      
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />        
         <Route path="/write" element={<Write />} />

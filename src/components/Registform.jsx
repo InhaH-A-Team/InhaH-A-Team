@@ -13,7 +13,7 @@ const validateNickname = (nickname) => {
 
 
 function Registform() {
-  const [form, setForm] = useState({ email: "", password: "", name: ""  });
+  const [form, setForm] = useState({ email: "", password: "", nickname: ""  });
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -23,7 +23,7 @@ function Registform() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //유효성 검사
-    if (!form.email || !form.password || !form.name) {
+    if (!form.email || !form.password || !form.nickname) {
       setError("모든 항목을 입력하세요.");
       return;
     }
