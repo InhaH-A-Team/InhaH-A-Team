@@ -25,6 +25,9 @@
   padding: 8px 24px;        /* 더 얇게 */
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* 본문 영역 2단 */
@@ -78,7 +81,24 @@
   color: #3F3F3F;
 }
 
+/*즐겨찾기 버튼*/
+.favorite-btn {
+  transition: background 0.2s;
+  border-radius: 12px;
+}
+.favorite-btn.active {
+  background: #C3BCA3;
+  color: #3F3F3F;
+}
+
 /* 댓글 */
+.comments-box {
+  background: #f6f5f3;
+  border-radius: 24px;
+  padding: 16px 20px;
+  margin-top: 16px;
+}
+
 .details-comment {
   background: #F6F5F3;
   border-radius: 24px;

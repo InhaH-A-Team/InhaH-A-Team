@@ -4,6 +4,7 @@ import './Details.css';
 import Nav from '../components/Nav';
 import CommentForm from '../components/CommentForm';
 import CommentList from '../components/CommentList';
+import FavoriteButton from '../components/FavoriteButton';
 
 const mockData = [
   { id: 1, title: '2살 수컷 고양이 분양합니다', type: '고양이', region: '서울', gender: '수컷', age: 2 },
@@ -59,7 +60,10 @@ function Details() {
     <div className="details-container">
       <Nav />
       <div className="details-inner">
-        <div className="details-title">{animal.title}</div>
+        <div className="details-title">
+          {animal.title}
+          <FavoriteButton animal={animal} />
+        </div>
         <div className="details-content-row">
           <div className="details-left">
             <div className="details-image-preview">
@@ -78,7 +82,13 @@ function Details() {
         </div>
         {/* 댓글 입력 폼 */}
         <CommentForm onAdd={handleAddComment} />
-        <CommentList comments={comments} onDelete={handleDeleteComment} />
+        <div className="comments-box">
+          {comments.length === 0 ? (
+            <div className="no-comments">아직 댓글이 없습니다</div>
+          ) : (
+            <CommentList comments={comments} onDelete={handleDeleteComment} />
+          )}
+        </div>
       </div>
     </div>
   );

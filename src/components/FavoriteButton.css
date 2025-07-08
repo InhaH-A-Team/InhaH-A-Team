@@ -1,0 +1,15 @@
+.favorite-btn {
+  transition: background 0.2s;
+  border-radius: 12px;
+  margin-left: 16px;
+  background: #ECEAE4;
+  color: #3F3F3F;
+  border: none;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.favorite-btn.active {
+  background: #C3BCA3;
+  color: #3F3F3F;
+}
