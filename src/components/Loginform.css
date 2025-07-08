@@ -9,15 +9,11 @@
 
 /* 이거 걍 이미지로 바꿀거임 나중에 */
 .login-logo {
-  font-family: 'Pretendard', 'Arial', sans-serif;
-  font-size: 90px;
-  font-weight: 900;
-  color: #71695b;
-  letter-spacing: -4px;
-  margin-bottom: 38px;
-  text-align: center;
-  line-height: 1.1;
+  display: block;
+  width: 200px;   /* 로고 이미지 너비 */
+  margin: 0 auto 38px;
 }
+
 
 .login-form {
   display: flex;
