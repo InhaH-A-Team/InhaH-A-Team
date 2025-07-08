@@ -4,7 +4,7 @@ import "./Loginform.css";
 function Loginform() {
   return (
     <div className="login-wrap">
-      <div className="login-logo">유연</div>
+      <img src="/src/assets/logo.png" alt="logo" className="login-logo" />
       <form className="login-form">
         <input
           type="text"
