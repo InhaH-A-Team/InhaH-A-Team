@@ -68,7 +68,7 @@ function Home() {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="제목으로 검색하세요..."
+            placeholder="검색어를 입력하세요"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

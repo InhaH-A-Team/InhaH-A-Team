@@ -2,18 +2,21 @@
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+  max-width: 100%;
 }
 
 .comment-input {
-  padding: 8px;
+  padding: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  width: 70%;
+  width: 90%;
+  flex: 1;
+  min-width: 0;
 }
 
 .comment-submit-btn {
   margin-left: 8px;
-  padding: 8px 16px;
+  padding: 16px 16px;
   border-radius: 8px;
   background: #C3BCA3;
   color: #3F3F3F;
