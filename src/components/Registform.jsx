@@ -3,17 +3,19 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import './Registform.css';
 
+
 //이메일 유효성검사 정규식
 function validateEmail(email) {
   return /\S+@\S+\.\S+/.test(email);
 }
-const validateNickname = (nickname) => {
-  return nickname.length >= 2 && nickname.length <= 8;
+const validateNickname = (nick_name) => {
+  return nick_name.length >= 2 && nick_name.length <= 8;
 };
 
 
 function Registform() {
-  const [form, setForm] = useState({ email: "", password: "", nickname: ""  });
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ email: "", password: "", nick_name: ""  });
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -23,7 +25,7 @@ function Registform() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //유효성 검사
-    if (!form.email || !form.password || !form.nickname) {
+    if (!form.email || !form.password || !form.nick_name) {
       setError("모든 항목을 입력하세요.");
       return;
     }
@@ -31,13 +33,13 @@ function Registform() {
       setError("올바른 이메일 형식을 입력하세요.")
       return;
     }
-    if (!validateNickname(form.nickname)) {
+    if (!validateNickname(form.nick_name)) {
     setError("닉네임은 2글자 이상, 8글자 이하로 입력하세요.");
     return;
   }
     try {
-      const res = await axios.post("/api/signup", form);
-      if (res.data.success) {
+      const res = await axios.post("http://3.105.240.233/users/signup", form);
+      if (res.data.status==="success") {
         alert("회원가입 성공!");
         navigate("/");
       } else {
@@ -47,8 +49,6 @@ function Registform() {
       setError("서버 에러");
     }
   };
-
-  
 
   return (
     <div className="regist-wrap">
@@ -63,7 +63,7 @@ function Registform() {
       <input 
       className="regist-input"
       type="text"
-      name="nickname"
+      name="nick_name"
       placeholder="닉네임(2~8자)"
       onChange={handleChange}
       />
