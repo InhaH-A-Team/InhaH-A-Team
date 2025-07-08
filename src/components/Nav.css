@@ -40,3 +40,9 @@
 .nav-item:hover, .nav-logo:hover {
   color:#C3BCA3;
 }
+
+.nav-logo-img {
+  height: 60px;
+  object-fit: contain;
+  margin-top: 30px;
+}
