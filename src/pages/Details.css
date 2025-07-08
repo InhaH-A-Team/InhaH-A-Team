@@ -99,6 +99,13 @@
   margin-top: 16px;
 }
 
+.comment-form {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 .details-comment {
   background: #F6F5F3;
   border-radius: 24px;
