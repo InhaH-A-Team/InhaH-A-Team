@@ -29,6 +29,8 @@ function Home() {
     age: [],
   });
 
+  const [searchTerm, setSearchTerm] = useState('');
+
   const handleCheck = (category, value) => {
     setFilters((prev) => {
       const exists = prev[category].includes(value);
@@ -49,11 +51,13 @@ function Home() {
   const filteredData = mockData.filter((item) => {
     const { type, region, gender, age } = filters;
     const ageMatches = age.length === 0 || age.some((range) => isAgeInRange(item.age, range));
+    const searchMatch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
     return (
       (type.length === 0 || type.includes(item.type)) &&
       (region.length === 0 || region.includes(item.region)) &&
       (gender.length === 0 || gender.includes(item.gender)) &&
-      ageMatches
+      ageMatches &&
+      searchMatch
     );
   });
 
@@ -61,6 +65,16 @@ function Home() {
     <div>
       <Nav />
       <div className="home-container">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="제목으로 검색하세요..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span className="search-icon">🔍</span>
+        </div>
+
         <div className="filter-box">
           {Object.entries(categories).map(([key, options]) => (
             <div className="filter-group" key={key}>

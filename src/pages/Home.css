@@ -53,6 +53,46 @@
   box-sizing: border-box;
 }
 
+/* 검색창 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin-bottom: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.search-bar input {
+  border: none;
+  flex-grow: 1;
+  font-size: 14px;
+  outline: none;
+  background-color: transparent;
+}
+
+.search-icon {
+  font-size: 18px;
+  margin-left: 8px;
+}
+
+/* 카드의 너비를 자동화 */
+.animal-card {
+  width: 100%; /* grid 셀에 맞게 꽉 차게 */
+  max-width: 100%; /* 혹시 있을 width 제한 무효화 */
+  height: 220px;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 10px;
+  text-align: center;
+  background-color: #f4f1ea;
+  font-size: 14px;
+}
+
+
 @media (max-width: 1024px) {
   .card-grid {
     grid-template-columns: repeat(3, 1fr);
