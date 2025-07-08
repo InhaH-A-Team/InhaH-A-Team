@@ -1,0 +1,23 @@
+.comment-form {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.comment-input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 70%;
+}
+
+.comment-submit-btn {
+  margin-left: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #C3BCA3;
+  color: #3F3F3F;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}

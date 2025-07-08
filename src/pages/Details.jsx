@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './Details.css';
 import Nav from '../components/Nav';
+import CommentForm from '../components/CommentForm';
+import CommentList from '../components/CommentList';
 
 const mockData = [
   { id: 1, title: '2살 수컷 고양이 분양합니다', type: '고양이', region: '서울', gender: '수컷', age: 2 },
@@ -17,6 +19,30 @@ const mockData = [
 function Details() {
   const { id } = useParams();
   const animal = mockData.find((item) => String(item.id) === id);
+
+  // 댓글을 localStorage에서 불러오기
+  const getStoredComments = () => {
+    const saved = localStorage.getItem(`comments_${id}`);
+    return saved ? JSON.parse(saved) : [];
+  };
+
+  const [comments, setComments] = useState(getStoredComments);
+
+  // 댓글이 바뀔 때마다 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem(`comments_${id}`, JSON.stringify(comments));
+  }, [comments, id]);
+
+  const handleAddComment = (text) => {
+    setComments(prev => [
+      ...prev,
+      { id: Date.now(), text }
+    ]);
+  };
+
+  const handleDeleteComment = (commentId) => {
+    setComments(prev => prev.filter(comment => comment.id !== commentId));
+  };
 
   if (!animal) {
     return (
@@ -50,8 +76,9 @@ function Details() {
             {/* 본문 내용이 들어갑니다 */}
           </div>
         </div>
-        <div className="details-comment">댓글1</div>
-        <div className="details-comment">댓글2</div>
+        {/* 댓글 입력 폼 */}
+        <CommentForm onAdd={handleAddComment} />
+        <CommentList comments={comments} onDelete={handleDeleteComment} />
       </div>
     </div>
   );
