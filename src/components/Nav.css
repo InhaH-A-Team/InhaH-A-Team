@@ -1,21 +1,17 @@
 .nav-container {
-  position: fixed;            
-  top: 0;                     
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;      
-
-  font-family: "Katibeh", serif;
-  font-style: normal;
-
+  z-index: 1000;
   background-color: #716A5C;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.8rem 2rem;
-  height:45px;
-  margin-bottom:100px;
+
+  padding: 0.5rem 1rem;
+  height: 60px; /* 로고 크기에 맞게 조정 */
 }
 
 .nav-left, .nav-right {
@@ -42,7 +38,7 @@
 }
 
 .nav-logo-img {
-  height: 60px;
+  height: 70px;         /* 필요시 100px로 키우기 가능 */
   object-fit: contain;
-  margin-top: 30px;
+  margin-top: 15px;
 }
