@@ -26,4 +26,4 @@ function FavoriteDropdown({ onClose, style }) {
   );
 }
 
-export default FavoritePopup;
+export default FavoriteDropdown;
