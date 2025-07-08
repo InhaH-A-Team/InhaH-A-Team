@@ -80,15 +80,16 @@ function Details() {
             {/* 본문 내용이 들어갑니다 */}
           </div>
         </div>
-        {/* 댓글 입력 폼 */}
-        <CommentForm onAdd={handleAddComment} />
         <div className="comments-box">
           {comments.length === 0 ? (
             <div className="no-comments">아직 댓글이 없습니다</div>
           ) : (
             <CommentList comments={comments} onDelete={handleDeleteComment} />
           )}
+          {/* 댓글 입력 폼을 리스트 아래로 이동 */}
+          <CommentForm onAdd={handleAddComment} />
         </div>
+        
       </div>
     </div>
   );

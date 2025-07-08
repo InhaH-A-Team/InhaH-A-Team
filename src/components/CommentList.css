@@ -12,13 +12,20 @@
   background: #C3BCA3;
 }
 
+/* 삭제 버튼 기본 색상 */
 .comment-delete-btn {
   position: absolute;
   right: 16px;
   top: 16px;
   background: none;
   border: none;
-  color: #C3BCA3;
+  color: #3f3f3f;
   cursor: pointer;
   font-weight: bold;
+  transition: color 0.2s;
+}
+
+/* 댓글이 hover일 때 삭제 버튼만 흰색으로 */
+.details-comment:hover .comment-delete-btn {
+  color: #fff;
 }
