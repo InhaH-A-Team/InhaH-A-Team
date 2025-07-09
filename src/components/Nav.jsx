@@ -8,6 +8,16 @@ function Nav() {
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem("access_token");
+
+  const handleProtectedClick = (path) => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }  else {
+      navigate(path);
+  }
+};
+
 
   // 로그인한 경우 사용자 정보 불러오기
   useEffect(() => {
@@ -43,8 +53,8 @@ function Nav() {
 
       <div className="nav-right">
         <Link to="/about" className="nav-item">About us</Link>
-        <Link to="/star" className="nav-item">star</Link>
-        <Link to="/write" className="nav-item">write</Link>
+        <span className="nav-item" onClick={() => handleProtectedClick("/star")}>star</span>
+        <span className="nav-item" onClick={() => handleProtectedClick("/write")}>write</span>
 
         {user===null ? (
           <Link to="/login" className="nav-item">login</Link>

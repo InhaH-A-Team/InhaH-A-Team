@@ -31,6 +31,7 @@
   font-size: 2rem;
   color: #F9F8F6;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-item:hover, .nav-logo:hover {
