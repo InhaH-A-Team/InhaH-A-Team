@@ -89,22 +89,29 @@ input[type="radio"] {
 .write-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 18px;
+  margin-bottom: 12px;
 }
 .write-row > span {
-  width: 55px;
+  width: 75px;
   color: #3F3F3F;
   font-weight: 500;
   font-size: 15px;
   margin-right: 2px;
 }
-.write-phone {
+.write-phone, .write-input {
   border: 1px solid #f3f3f3;
   padding: 4px 8px;
   border-radius: 4px;
   background: #fff;
   width: 180px;
+}
+.write-age{
+  border: 1px solid #f3f3f3;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #fff;
+  width: 160px;
 }
 .write-filebar {
   background: #F9F4EE;

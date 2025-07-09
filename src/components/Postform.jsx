@@ -1,18 +1,44 @@
 import React, { useState } from "react";
 import "./Postform.css";
+import { useNavigate } from "react-router-dom";
+import { createPost } from "../api";
 
 function Postform() {
   const [form, setForm] = useState({
     title: "",
-    age: [],
+    age: "",
     gender: [],
     species: [],
     phone: "",
     contents: "",
     mainPhoto: null,
     contentFile: null,
+    health_status: "",
+    provider_type: [],
+    address: "",
   });
+
   const [mainPreview, setMainPreview] = useState(null);
+  const navigate = useNavigate();
+
+  function normalizeAddress(input) {
+  const lower = input.toLowerCase().replace(/\s+/g, "");
+  if (lower.includes("서울")) return "서울";
+  if (lower.includes("인천")) return "인천";
+  if (lower.includes("부산")) return "부산";
+  if (lower.includes("대구")) return "대구";
+  if (lower.includes("광주")) return "광주";
+  if (lower.includes("대전")) return "대전";
+  if (lower.includes("세종")) return "세종";
+  if (lower.includes("제주")) return "제주도";
+  if (lower.includes("충청")) return "충청도";
+  if (lower.includes("경기")) return "경기도";
+  if (lower.includes("강원")) return "강원도";
+  if (lower.includes("경상")) return "경상도";
+  if (lower.includes("전라")) return "전라도";
+
+  return "";
+}
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -52,7 +78,7 @@ function Postform() {
   }
 };
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   if (!form.title) {
     alert("제목을 입력해주세요.");
@@ -62,7 +88,7 @@ function Postform() {
     alert("사진은 필수항목입니다.");
     return;
   }
-  if (form.age.length === 0) {
+  if (form.age.length ===0) {
     alert("나이는 필수항목입니다.");
     return;
   }
@@ -74,20 +100,50 @@ function Postform() {
     alert("종은 필수항목입니다.");
     return;
   }
+  if (form.provider_type.length === 0) {
+    alert("보호자 유형은 필수항목입니다.");
+    return;
+  }
+  const normalizedAddress = normalizeAddress(form.address);
+  if (!normalizedAddress) {
+    alert("허용되지 않은 주소입니다. 시/도만 입력해주세요.");
+    return;
+}
     // 010-1234-5678 형식 체크
     if (!/^01[0-9]-\d{3,4}-\d{4}$/.test(form.phone)) {
       alert("연락처를 올바른 형식 (010-1234-5678) 으로 입력하세요.");
     return;
   }
+    const postData = {
+      title: form.title,
+      species: form.species[0],
+      gender: form.gender[0],
+      age: form.age[0],
+      health_status: form.health_status,
+      provider_type: form.provider_type[0],
+      address: normalizedAddress,
+      phone_number: form.phone,
+      contents: form.contents,
+      image: form.mainPhoto
+    };
 
-    // 실제 제출 처리 추가해야됨.
-    alert("등록 완료!");
+
+  try {
+      const res = await createPost(postData);
+      if (res.status === "success") {
+        alert(res.message);
+        navigate("/");
+      } 
+      else {
+        alert(res.message || "등록 실패");
+      }
+    } catch (err) {
+      alert("서버 오류가 발생했습니다.");
+    }
   };
-
-  return (
+    return (
     <div className="platform-container">
       <form className="write-container" onSubmit={handleSubmit}>
-        {/* 제목 */}
         <input
           className="write-title"
           type="text"
@@ -109,13 +165,24 @@ function Postform() {
             </div>
           </div>
 
-          {/* specific (age, gender, species, phone) */}
           <div className="write-specificbox">
+
+            <div className="write-row">
+              <span>종</span>
+              <label><input type="radio" name="species" value="강아지" onChange={handleRadio} />강아지</label>
+              <label><input type="radio" name="species" value="고양이" onChange={handleRadio} />고양이</label>
+              <label><input type="radio" name="species" value="기타" onChange={handleRadio} />기타</label>
+            </div>
+
             <div className="write-row">
               <span>나이</span>
-              <label><input type="radio" name="age" value="0-3세" onChange={handleRadio} />0-3살</label>
-              <label><input type="radio" name="age" value="3-6세" onChange={handleRadio} />3-6살</label>
-              <label><input type="radio" name="age" value="6세 이상" onChange={handleRadio} />6살 이상</label>
+              <input type="number"
+                name="age"
+                value={form.age}
+                onChange={handleInputChange}
+                className="write-age"
+                placeholder="12개월 미만은 0으로 입력"
+              />
             </div>
 
             <div className="write-row">
@@ -125,10 +192,9 @@ function Postform() {
             </div>
 
             <div className="write-row">
-              <span>종</span>
-              <label><input type="radio" name="species" value="강아지" onChange={handleRadio} />강아지</label>
-              <label><input type="radio" name="species" value="고양이" onChange={handleRadio} />고양이</label>
-              <label><input type="radio" name="species" value="기타" onChange={handleRadio} />기타</label>
+              <span>제공자 유형</span>
+              <label><input type="radio" name="provider_type" value="개인" onChange={handleRadio} />개인</label>
+              <label><input type="radio" name="provider_type" value="기관" onChange={handleRadio} />기관</label>
             </div>
 
             <div className="write-row">
@@ -142,10 +208,33 @@ function Postform() {
                 className="write-phone"
               />
             </div>
+
+            <div className="write-row">
+              <span>건강상태</span>
+              <input
+                type="text"
+                name="health_status"
+                className="write-input"
+                placeholder="건강상태를 간단히 입력해주세요"
+                value={form.health_status}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="write-row">
+              <span>주소</span>
+              <input
+                type="text"
+                name="address"
+                className="write-input"
+                placeholder="ex) 경상도 or 서울"
+                value={form.address}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
         </div>
 
-        {/* 사진 업로드 */}
       <div className="write-filebar">
         <label className="write-filebtn" htmlFor="contentFileInput">파일선택</label>
         <input
@@ -162,7 +251,6 @@ function Postform() {
         </span>
       </div>
 
-        {/* 내용 입력 */}
         <div className="write-contentbox">
           <textarea
             className="write-content"
@@ -180,5 +268,8 @@ function Postform() {
     </div>
   );
 }
+
+
+
 
 export default Postform;
