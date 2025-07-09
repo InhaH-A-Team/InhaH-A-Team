@@ -41,14 +41,8 @@ function Nav() {
         </Link>
       </div>
 
-<<<<<<< HEAD
-      {/* 네비게이션 메뉴 */}
-      <div className="nav-right"> 
-=======
       <div className="nav-right">
-        <Link to="/star" className="nav-item">star</Link>
->>>>>>> 415f72453137d91e74a98ad7669b742f3bbdafb7
-        <Link to="/contact" className="nav-item">contact</Link>
+        <Link to="/about" className="nav-item">About us</Link>
         <Link to="/star" className="nav-item">star</Link>
         <Link to="/write" className="nav-item">write</Link>
 
