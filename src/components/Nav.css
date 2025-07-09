@@ -42,3 +42,41 @@
   object-fit: contain;
   margin-top: 15px;
 }
+
+.nav-user-wrapper {
+  position: relative;
+}
+
+.dropdown-box {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dropdown-nickname {
+  font-weight: bold;
+}
+
+.dropdown-email {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.dropdown-logout {
+  background-color: #FD6C6C;
+  color: white;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
