@@ -21,7 +21,17 @@ export async function loginUser(data) {
 
 // 회원 정보 조회 (GET /users/)
 export async function fetchUserInfo() {
-  return fetch(`${BASE_URL}users/`).then(res => res.json());
+  const token = localStorage.getItem("access_token");
+  return fetch(`${BASE_URL}users/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(res => {
+    if (!res.ok) throw new Error("인증 실패");
+    return res.json();
+  });
 }
 
 // 회원 정보 수정 (PATCH /users/)
