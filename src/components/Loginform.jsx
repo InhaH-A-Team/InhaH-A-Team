@@ -27,12 +27,10 @@ function Loginform() {
     try {
       const data = await loginUser({ email, password });
 
-      // 명세서 기준으로 응답 처리
       if (data.access_token) {
-        // 토큰 저장 (refresh_token도 필요하면 같이 저장)
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
-        navigate("/"); // 홈페이지로 이동
+        navigate("/");
       } else if (data.message) {
         setError(data.message);
       } else {
