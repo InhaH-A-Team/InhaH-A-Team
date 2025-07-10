@@ -4,7 +4,7 @@ import Nav from '../components/Nav';
 import CommentForm from '../components/CommentForm';
 import CommentList from '../components/CommentList';
 import FavoriteButton from '../components/FavoriteButton';
-import { fetchPostDetail, fetchComments, createComment, deleteComment } from '../api';
+import { fetchPostDetail, fetchComments, createComment, deleteComment, deletePost } from '../api';
 import './Details.css';
 
 const BASE_URL = "https://youyeon.p-e.kr";
@@ -19,6 +19,10 @@ function Details() {
   const [animal, setAnimal] = useState(null);
   const [comments, setComments] = useState([]);
   const navigate = useNavigate();
+
+
+  const currentUserId = localStorage.getItem("user_id");
+  const isAuthor = String(currentUserId) === String(animal?.user);
 
   useEffect(() => {
     // 📌 post 객체 안에 진짜 데이터 있음
@@ -56,6 +60,24 @@ function Details() {
     }
   };
 
+  const handleDeletePost = async () => {
+  if (!window.confirm("정말 이 게시글을 삭제하시겠습니까?")) return;
+
+  try {
+    const res = await deletePost(id);
+    if (res.ok) {
+      alert("게시물이 삭제되었습니다.");
+      navigate("/"); // 삭제 후 메인 페이지로 이동
+    } else {
+      const err = await res.json();
+      alert(err.message || "삭제에 실패했습니다.");
+    }
+  } catch (err) {
+    console.error("삭제 에러:", err);
+    alert("삭제 도중 오류가 발생했습니다.");
+  }
+};
+
   const handleDeleteComment = async (commentId) => {
     try {
       const res = await deleteComment(commentId);
@@ -84,9 +106,16 @@ function Details() {
     <div className="details-container">
       <Nav />
       <div className="details-inner">
-        <div className="details-title">
-          {animal.title}
+      <div className="details-title">
+        {animal.title}
+
+        {isAuthor ? (
+          <button onClick={handleDeletePost} className="delete-post-btn">
+            글 삭제
+          </button>
+        ) : (
           <FavoriteButton animal={animal} />
+        )}
         </div>
         <div className="details-content-row">
           <div className="details-left">

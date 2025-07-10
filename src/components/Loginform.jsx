@@ -31,6 +31,7 @@ function Loginform() {
       if (data.access_token) {
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
+        localStorage.setItem("user_id", data.user_id);
         navigate("/");
       } else if (data.message) {
         setError(data.message);
