@@ -63,8 +63,11 @@
   gap: 8px;
 }
 
-.dropdown-nickname {
+.dropdown-nickname-row {
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .dropdown-email {
