@@ -79,7 +79,7 @@ function FavoritePage() {
                 <div className="favorite-card-content">
                   <div className="favorite-card-info-row"><span>종</span> <b>{item.species || '-'}</b></div>
                   <div className="favorite-card-info-row"><span>지역</span> <b>{item.address || '-'}</b></div>
-                  <div className="favorite-card-info-row"><span>작성자</span> <b>{item.writer || '-'}</b></div>
+                  <div className="favorite-card-info-row"><span>소속</span> <b>{item.provider_type || '-'}</b></div>
                 </div>
               </div>
             ))}
