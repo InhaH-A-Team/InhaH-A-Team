@@ -7,21 +7,28 @@ function CommentList({ comments, onDelete }) {
 
   return (
     <div>
-      {comments.map(comment => (
-        <div className="details-comment" key={comment.id}>
-          <div className="comment-meta">
-            <span className="comment-author">{comment.author || '익명'}</span>
-            <span className="comment-date">{comment.created_at ? comment.created_at.slice(0, 16).replace('T', ' ') : ''}</span>
+      {comments.map(comment => {
+        console.log(comment);
+        return (
+          <div className="details-comment" key={comment.id}>
+            <div className="comment-meta">
+              <span className="comment-author" style={{ marginRight: '12px', fontWeight: 'bold' }}>
+                {comment.user_nickname || '익명'}
+              </span>
+              <span className="comment-date" style={{ color: '#888', fontSize: '0.95em' }}>
+                {comment.create_at ? comment.create_at.slice(0, 16).replace('T', ' ') : ''}
+              </span>
+            </div>
+            <div className="comment-text">{comment.contents}</div>
+            <button
+              className="comment-delete-btn"
+              onClick={() => onDelete(comment.id)}
+            >
+              삭제
+            </button>
           </div>
-          <div className="comment-text">{comment.text || comment.content}</div>
-          <button
-            className="comment-delete-btn"
-            onClick={() => onDelete(comment.id)}
-          >
-            삭제
-          </button>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
