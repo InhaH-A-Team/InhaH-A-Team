@@ -110,8 +110,10 @@ function Home() {
           {filteredData.length === 0 ? (
             <p>조건에 맞는 동물이 없습니다.</p>
           ) : (
-            filteredData.map(animal => (
-              <AnimalCard key={animal.id} animal={animal} />
+            filteredData
+            .filter(animal => animal.post_id) // post_id가 있는 것만
+            .map(animal => (
+              <AnimalCard key={animal.post_id} animal={animal} />
             ))
           )}
         </div>
