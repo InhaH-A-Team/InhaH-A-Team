@@ -5,8 +5,7 @@
   right: 0;
   z-index: 1000;
   background-color: #716A5C;
-
-  font-family: 'Katibeh', sans-serif;
+  font-family: Pretendard;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,7 +41,7 @@
 .nav-logo-img {
   height: 70px;         /* 필요시 100px로 키우기 가능 */
   object-fit: contain;
-  margin-top: 27px;
+  margin-top: 10px;
 }
 
 .nav-user-wrapper {
@@ -83,4 +82,8 @@
   cursor: pointer;
   font-size: 0.9rem;
   border-radius: 4px;
+}
+
+.nav-container, .nav-item, .nav-logo, .user-nickname {
+  font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', Arial, sans-serif;
 }
