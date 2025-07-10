@@ -84,6 +84,7 @@ function Details() {
               <div>성별: {animal.gender}</div>
               <div>종: {animal.species}</div>
               <div>지역: {animal.address}</div>
+              <div><b>전화번호: {animal.phone_number || '-'}</b></div>
             </div>
           </div>
           <div className="details-main-content">
