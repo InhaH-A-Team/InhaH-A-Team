@@ -5,51 +5,38 @@ import Nav from '../components/Nav';
 import CommentForm from '../components/CommentForm';
 import CommentList from '../components/CommentList';
 import FavoriteButton from '../components/FavoriteButton';
-
-// 추후 API 연동시 서버 데이터로 대체
-const mockData = [
-  { id: 1, title: '2살 수컷 고양이 분양합니다', type: '고양이', region: '서울', gender: '수컷', age: 2 },
-  { id: 2, title: '4살 암컷 강아지 분양합니다', type: '강아지', region: '경기도', gender: '암컷', age: 4 },
-  { id: 3, title: '1살 수컷 기타 분양합니다', type: '기타', region: '부산', gender: '수컷', age: 1 },
-  { id: 4, title: '9살 암컷 고양이 분양합니다', type: '고양이', region: '서울', gender: '암컷', age: 9 },
-  { id: 5, title: '3살 수컷 강아지 분양합니다', type: '강아지', region: '대전', gender: '수컷', age: 3 },
-  { id: 6, title: '5살 암컷 기타 분양합니다', type: '기타', region: '광주', gender: '암컷', age: 5 },
-  { id: 7, title: '10살 수컷 고양이 분양합니다', type: '고양이', region: '인천', gender: '수컷', age: 10 },
-  { id: 8, title: '6살 암컷 강아지 분양합니다', type: '강아지', region: '제주도', gender: '암컷', age: 6 },
-];
+import { fetchPostDetail, fetchComments, createComment, deleteComment } from '../api';
 
 function Details() {
   const { id } = useParams();
 
-  // API 연동 시 animal을 서버에서 받아온 데이터로 설정
-  const animal = mockData.find((item) => String(item.id) === id);
+  // 게시글 상세 정보 상태
+  const [animal, setAnimal] = useState(null);
+  // 댓글 목록 상태
+  const [comments, setComments] = useState([]);
 
-  // API 연동 시 댓글도 서버에서 받아오고, 저장 및 삭제도 서버로 요청
-  const getStoredComments = () => {
-    const saved = localStorage.getItem(`comments_${id}`);
-    return saved ? JSON.parse(saved) : [];
-  };
-
-  const [comments, setComments] = useState(getStoredComments);
-
+  // 컴포넌트 마운트 시 게시글 상세와 댓글 목록을 API로부터 불러옴
   useEffect(() => {
-    // API 연동 시 서버로 댓글 저장 요청
-    localStorage.setItem(`comments_${id}`, JSON.stringify(comments));
-  }, [comments, id]);
+    // 게시글 상세 정보 불러오기
+    fetchPostDetail(id).then(data => setAnimal(data));
+    // 댓글 목록 불러오기
+    fetchComments(id).then(data => setComments(Array.isArray(data) ? data : []));
+  }, [id]);
 
-  const handleAddComment = (text) => {
-    // API 연동 시 서버로 댓글 추가 요청
-    setComments(prev => [
-      ...prev,
-      { id: Date.now(), text }
-    ]);
+  // 댓글 추가 시 서버에 등록 후 목록 갱신
+  const handleAddComment = async (text) => {
+    // createComment는 { post, text } 형태로 데이터 전달 필요
+    const newComment = await createComment({ post: id, text });
+    setComments(prev => [...prev, newComment]);
   };
 
-  const handleDeleteComment = (commentId) => {
-    // API 연동 시 서버로 댓글 삭제 요청
+  // 댓글 삭제 시 서버에 삭제 요청 후 목록 갱신
+  const handleDeleteComment = async (commentId) => {
+    await deleteComment(commentId);
     setComments(prev => prev.filter(comment => comment.id !== commentId));
   };
 
+  // 게시글 데이터가 없을 때 예외 처리
   if (!animal) {
     return (
       <div className="details-container">
@@ -82,18 +69,20 @@ function Details() {
             </div>
           </div>
           <div className="details-main-content">
-            {/* API 연동 시 본문 내용 받아와서 출력 */}
+            {/* 게시글 본문 내용 출력 */}
+            {animal.content}
           </div>
         </div>
         <div className="comments-box">
+          {/* 댓글이 없을 때와 있을 때 분기 */}
           {comments.length === 0 ? (
             <div className="no-comments">아직 댓글이 없습니다</div>
           ) : (
             <CommentList comments={comments} onDelete={handleDeleteComment} />
           )}
+          {/* 댓글 작성 폼 */}
           <CommentForm onAdd={handleAddComment} />
         </div>
-        
       </div>
     </div>
   );

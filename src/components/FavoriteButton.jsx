@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import './FavoriteButton.css';
+import { createFavorite, deleteFavorite, fetchFavorites } from '../api';
 
 function FavoriteButton({ animal }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // API 연동 시 서버에서 즐겨찾기 여부 받아오기
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    setIsFavorite(favorites.some(item => item.id === animal?.id));
+    if (!animal) return;
+    fetchFavorites()
+      .then(favorites => {
+        setIsFavorite(Array.isArray(favorites) && favorites.some(item => item.id === animal.id));
+      })
+      .catch(() => setIsFavorite(false));
   }, [animal]);
 
-  const handleToggleFavorite = () => {
-    // API 연동 시 서버에 즐겨찾기 추가 및 삭제 요청
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    if (isFavorite) {
-      const newFavorites = favorites.filter(item => item.id !== animal.id);
-      localStorage.setItem('favorites', JSON.stringify(newFavorites));
-      setIsFavorite(false);
-    } else {
-      const newFavorites = [...favorites, { id: animal.id, title: animal.title }];
-      localStorage.setItem('favorites', JSON.stringify(newFavorites));
-      setIsFavorite(true);
+  const handleToggleFavorite = async () => {
+    if (!animal) return;
+    try {
+      if (isFavorite) {
+        await deleteFavorite(animal.id);
+        setIsFavorite(false);
+      } else {
+        await createFavorite(animal.id);
+        setIsFavorite(true);
+      }
+    } catch (e) {
+      alert('즐겨찾기 처리 중 오류가 발생했습니다.');
     }
   };
 
