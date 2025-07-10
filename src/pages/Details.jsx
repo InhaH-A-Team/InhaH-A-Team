@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
 import CommentForm from '../components/CommentForm';
 import CommentList from '../components/CommentList';
@@ -18,6 +18,7 @@ function Details() {
   const { id } = useParams();
   const [animal, setAnimal] = useState(null);
   const [comments, setComments] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 📌 post 객체 안에 진짜 데이터 있음
@@ -77,16 +78,8 @@ function Details() {
   };
 
   if (!animal) {
-    return (
-      <div className="details-container">
-        <Nav />
-        <div className="details-inner">
-          <div className="details-title">존재하지 않는 게시글입니다.</div>
-        </div>
-      </div>
-    );
+    return navigate('/login');
   }
-
   return (
     <div className="details-container">
       <Nav />
