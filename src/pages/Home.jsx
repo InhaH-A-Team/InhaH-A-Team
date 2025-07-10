@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Home.css';
 import Nav from '../components/Nav';
 import AnimalCard from '../components/AnimalCard';
@@ -21,23 +21,57 @@ function Home() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [data, setData] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0); // 새로고침을 위한 키
+
+  // ✅ 게시글 불러오기 함수
+  const loadPosts = useCallback(async () => {
+    try {
+      const res = await fetchAllPosts();
+      console.log("API 응답:", res); // 🔍 응답 구조 확인용
+      
+      // 다양한 응답 구조 처리
+      let posts = [];
+      if (res?.post?.posts && Array.isArray(res.post.posts)) {
+        posts = res.post.posts;
+      } else if (res?.posts && Array.isArray(res.posts)) {
+        posts = res.posts;
+      } else if (Array.isArray(res)) {
+        posts = res;
+      } else {
+        console.error("게시글 데이터 형식 오류:", res);
+        setData([]);
+        return;
+      }
+      
+      console.log("처리된 게시글 데이터:", posts);
+      setData(posts.reverse());
+    } catch (err) {
+      console.error("게시글 불러오기 실패:", err);
+      setData([]);
+    }
+  }, []);
 
   // ✅ 게시글 불러오기
-    useEffect(() => {
-      fetchAllPosts()
-        .then(res => {
-          console.log("API 응답:", res); // 🔍 응답 구조 확인용
-          const posts = res?.post?.posts;
-          if (Array.isArray(posts)) {
-            setData(posts.reverse());
-          } else {
-            console.error("게시글 데이터 형식 오류:", res);
-          }
-        })
-        .catch(err => {
-          console.error("게시글 불러오기 실패:", err);
-        });
-    }, []);
+  useEffect(() => {
+    loadPosts();
+  }, [loadPosts, refreshKey]);
+
+  // 새로고침 함수 (다른 컴포넌트에서 호출 가능)
+  const refreshPosts = useCallback(() => {
+    console.log('Home 페이지 새로고침 호출됨');
+    setRefreshKey(prev => prev + 1);
+  }, []);
+
+  // 전역에 새로고침 함수 등록 (Postform에서 사용할 수 있도록)
+  useEffect(() => {
+    window.refreshHomePosts = refreshPosts;
+    console.log('전역 새로고침 함수 등록됨');
+    
+    return () => {
+      delete window.refreshHomePosts;
+      console.log('전역 새로고침 함수 제거됨');
+    };
+  }, [refreshPosts]);
 
 
   const handleCheck = (category, value) => {

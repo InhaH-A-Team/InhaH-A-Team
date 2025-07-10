@@ -95,13 +95,28 @@ function Postform() {
       const res = await createPost(postData);
       if (res.status === "success") {
         alert("게시글이 성공적으로 등록되었습니다.");
+        
+        // Home 페이지 새로고침 (전역 함수 호출)
+        try {
+          if (window.refreshHomePosts && typeof window.refreshHomePosts === 'function') {
+            console.log('Home 페이지 새로고침 시도');
+            window.refreshHomePosts();
+          } else {
+            console.log('새로고침 함수를 찾을 수 없음, 페이지 새로고침으로 대체');
+            window.location.reload();
+          }
+        } catch (refreshError) {
+          console.error('새로고침 오류:', refreshError);
+          window.location.reload();
+        }
+        
         navigate("/");
       } else {
         alert(res.message || "등록 실패");
       }
     } catch (err) {
+      console.error('게시글 등록 오류:', err);
       alert("서버 오류가 발생했습니다.");
-      console.error(err);
     }
   };
 
