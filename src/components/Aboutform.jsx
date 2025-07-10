@@ -17,7 +17,7 @@ const aboutTabs = [
   },
   {
     title: "Contributers",
-    subtitle: "멋쟁이사자처럼 14기 A팀",
+    subtitle: "멋쟁이사자처럼 13기 A팀",
     desc:
       "임병윤 FrontEnd 팀장\n\n 박준희 FrontEnd\n\n 강유림 FrontEnd 디자인 총괄\n\n 윤서연 BackEnd\n\n 이민정 BackEnd",
     contact: "Copyright 2025. Inha-A team All rights reserved."

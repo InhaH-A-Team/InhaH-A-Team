@@ -236,6 +236,20 @@ export async function fetchNotifications() {
   }).then(res => res.json());
 }
 
+export async function NotificationRead(notificationId) {
+  return fetch(`${BASE_URL}notifications/${notificationId}/`, {
+    method: "DELETE",
+    headers: {
+      ...getAuthHeader(),
+      "Content-Type": "application/json",
+    },
+  }).then(res => {
+    if (!res.ok) throw new Error("읽음 처리 실패");
+    if (res.status === 204) return { success: true };
+    return res.json();
+  });
+}
+
 /*
 ⚠️ 인증이 필요한 모든 요청에 Authorization 헤더가 추가됨.
 import { 함수명 } from '../api'; 으로 가져다 쓰면 됨.
