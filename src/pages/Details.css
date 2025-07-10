@@ -59,6 +59,15 @@
   margin-bottom: 20px;
 }
 
+.details-image-preview img {
+  max-width: 220px;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+}
+
 /* 정보 박스 */
 .details-info {
   background: #C3BCA3;

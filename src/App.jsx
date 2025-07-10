@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About'
+import FavoritePage from './pages/FavoritePage';
 function App() {
   return (
     <div>
@@ -18,6 +19,7 @@ function App() {
         <Route path="/write" element={<Write />} />
         <Route path="/details/:id" element={<Details />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/favorite" element={<FavoritePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

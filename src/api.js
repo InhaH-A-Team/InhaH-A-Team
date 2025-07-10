@@ -172,31 +172,64 @@ export async function updateComment(comment_id, data) {
 }
 
 // --- Favorite ---
-export async function createFavorite(data) {
+export async function createFavorite(post_id) {
+  console.log("즐겨찾기 생성 API 호출 - post_id:", post_id);
   return fetch(`${BASE_URL}favorites/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       ...getAuthHeader(),
     },
-    body: JSON.stringify(data),
-  }).then(res => res.json());
+    body: JSON.stringify({ post_id: post_id }), // 서버 요구사항에 맞게 수정
+  }).then(res => {
+    console.log("즐겨찾기 생성 응답 상태:", res.status);
+    return res.json().then(data => {
+      console.log("즐겨찾기 생성 응답 데이터:", data);
+      return data;
+    });
+  });
 }
 
 export async function fetchFavorites() {
+  console.log("즐겨찾기 목록 조회 API 호출");
   return fetch(`${BASE_URL}favorites/`, {
     headers: {
       ...getAuthHeader(),
     },
-  }).then(res => res.json());
+  }).then(res => {
+    console.log("즐겨찾기 목록 조회 응답 상태:", res.status);
+    return res.json().then(data => {
+      console.log("즐겨찾기 목록 조회 응답 데이터:", data);
+      return data;
+    });
+  });
 }
 
-export async function deleteFavorite(favorite_id) {
-  return fetch(`${BASE_URL}favorites/${favorite_id}/`, {
+export async function fetchFavoritePosts() {
+  console.log("즐겨찾기 게시글 조회 API 호출");
+  return fetch(`${BASE_URL}favorites/`, {
+    headers: {
+      ...getAuthHeader(),
+    },
+  }).then(res => {
+    console.log("즐겨찾기 게시글 조회 응답 상태:", res.status);
+    return res.json().then(data => {
+      console.log("즐겨찾기 게시글 조회 응답 데이터:", data);
+      return data;
+    });
+  });
+}
+
+export async function deleteFavorite(post_id) {
+  console.log("즐겨찾기 삭제 API 호출 - post_id:", post_id);
+  return fetch(`${BASE_URL}favorites/${post_id}/`, {
     method: "DELETE",
     headers: {
       ...getAuthHeader(),
     },
+  }).then(res => {
+    console.log("즐겨찾기 삭제 응답 상태:", res.status);
+    return res;
   });
 }
 

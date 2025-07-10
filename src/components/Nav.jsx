@@ -4,9 +4,12 @@ import './Nav.css';
 import logo from '../assets/logo2.png';
 import { fetchUserInfo } from "../api";
 import Alarm from './NotificationDropdown';
+import FavoriteDropdown from './FavoriteDropdown';
+
 function Nav() {
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showFavoriteDropdown, setShowFavoriteDropdown] = useState(false);
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("access_token");
 
@@ -18,6 +21,13 @@ function Nav() {
   }
 };
 
+  const handleFavoriteClick = () => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      navigate("/favorite");
+    }
+  };
 
   // 로그인한 경우 사용자 정보 불러오기
   useEffect(() => {
@@ -53,7 +63,7 @@ function Nav() {
 
       <div className="nav-right">
         <Link to="/about" className="nav-item">About us</Link>
-        <span className="nav-item" onClick={() => handleProtectedClick("/star")}>star</span>
+        <span className="nav-item" onClick={handleFavoriteClick}>즐겨찾기</span>
         <span className="nav-item" onClick={() => handleProtectedClick("/write")}>write</span>
 
         {user===null ? (
@@ -76,6 +86,18 @@ function Nav() {
           </div>
         )}
       </div>
+      
+      {showFavoriteDropdown && (
+        <FavoriteDropdown 
+          onClose={() => setShowFavoriteDropdown(false)}
+          style={{
+            position: 'absolute',
+            top: '60px',
+            right: '20px',
+            zIndex: 1000
+          }}
+        />
+      )}
     </nav>
   );
 }

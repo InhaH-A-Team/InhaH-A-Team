@@ -7,6 +7,13 @@ import FavoriteButton from '../components/FavoriteButton';
 import { fetchPostDetail, fetchComments, createComment, deleteComment } from '../api';
 import './Details.css';
 
+const BASE_URL = "https://youyeon.p-e.kr";
+const getImageUrl = (photo) => {
+  if (!photo) return null;
+  if (photo.startsWith('http')) return photo;
+  return `${BASE_URL}${photo}`;
+};
+
 function Details() {
   const { id } = useParams();
   const [animal, setAnimal] = useState(null);
@@ -17,7 +24,11 @@ function Details() {
     fetchPostDetail(id).then(res => {
       console.log("📦 Post detail API 응답:", res);
       if (res && res.post) {
-        setAnimal(res.post);
+        console.log("post 객체 구조:", res.post);
+        // id가 없으면 라우터의 id라도 강제로 넣어줌
+        const postObj = { ...res.post };
+        postObj.id = res.post.id || res.post.post_id || res.post.pk || id;
+        setAnimal(postObj);
       } else {
         setAnimal(null);
       }
@@ -63,7 +74,7 @@ function Details() {
           <div className="details-left">
             <div className="details-image-preview">
               {animal.photo ? (
-                <img src={animal.photo} alt="동물" />
+                <img src={getImageUrl(animal.photo)} alt="동물" />
               ) : (
                 <>이미지<br />미리보기</>
               )}

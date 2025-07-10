@@ -1,17 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import './FavoriteDropdown.css';
-import { fetchFavoritePosts } from '../api'; // 실제 API 함수로 교체
+import { fetchFavoritePosts } from '../api';
 
 function FavoriteDropdown({ onClose, style }) {
-  // API 연동: 서버에서 즐겨찾기 리스트 받아오기
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 실제 API 연동 시 fetchFavoritePosts() 사용
     fetchFavoritePosts()
-      .then(data => setFavorites(Array.isArray(data) ? data : []))
-      .catch(() => setFavorites([]))
+      .then(data => {
+        console.log("즐겨찾기 API 응답:", data);
+        console.log("응답 타입:", typeof data);
+        console.log("배열인가?", Array.isArray(data));
+        
+        let favoritesData = [];
+        
+        // 다양한 응답 구조 처리
+        if (Array.isArray(data)) {
+          favoritesData = data;
+        } else if (data && Array.isArray(data.favorites)) {
+          favoritesData = data.favorites;
+        } else if (data && Array.isArray(data.data)) {
+          favoritesData = data.data;
+        } else if (data && data.results && Array.isArray(data.results)) {
+          favoritesData = data.results;
+        } else if (data && typeof data === 'object') {
+          // 객체인 경우 키들을 확인
+          console.log("객체 키들:", Object.keys(data));
+          favoritesData = [];
+        }
+        
+        console.log("처리된 즐겨찾기 데이터:", favoritesData);
+        setFavorites(favoritesData);
+      })
+      .catch(error => {
+        console.error("즐겨찾기 로딩 오류:", error);
+        setFavorites([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -27,7 +52,9 @@ function FavoriteDropdown({ onClose, style }) {
         <ul>
           {favorites.map(item => (
             <li key={item.id}>
-              <a href={`/details/${item.id}`}>{item.title}</a>
+              <a href={`/details/${item.post || item.post_id || item.id}`}>
+                {item.post_title || item.title || `게시글 ${item.post || item.post_id || item.id}`}
+              </a>
             </li>
           ))}
         </ul>
