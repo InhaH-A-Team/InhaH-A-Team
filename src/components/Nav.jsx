@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import './Nav.css';
 import logo from '../assets/logo2.png';
 import { fetchUserInfo } from "../api";
-
+import Alarm from './NotificationDropdown';
 function Nav() {
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -65,7 +65,10 @@ function Nav() {
             </div>
             {showDropdown && (
               <div className="dropdown-box">
-                <div className="dropdown-nickname">{user.nick_name}</div>
+                <div className="dropdown-nickname-row">
+                  {user.nick_name} <Alarm/>
+                </div>
+
                 <div className="dropdown-email">{user.email}</div>
                 <button className="dropdown-logout" onClick={handleLogout}>로그아웃</button>
               </div>
