@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Home.css';
 import Nav from '../components/Nav';
 import AnimalCard from '../components/AnimalCard';
+import { fetchAllPosts } from '../api';
 
 const mockData = [
   { id: 1, title: '2살 수컷 고양이 분양합니다', type: '고양이', region: '서울', gender: '수컷', age: 2 },

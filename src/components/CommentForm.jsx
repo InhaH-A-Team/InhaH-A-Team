@@ -7,7 +7,6 @@ function CommentForm({ onAdd }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
-    // API 연동 시 서버에 댓글 등록 요청
     onAdd(text);
     setText('');
   };

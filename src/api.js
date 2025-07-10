@@ -44,35 +44,14 @@ export async function updateUserInfo(data) {
 }
 
 // --- Post ---
-// 게시글 생성 (POST /posts)
-export async function createPost(form) {
-  const formData = new FormData();
-  formData.append("title", form.title);
-  formData.append("species", form.species);
-  formData.append("gender", form.gender);
-  formData.append("age", form.age);
-  formData.append("health_status", form.health_status);
-  formData.append("provider_type", form.provider_type);
-  formData.append("address", form.address);
-  formData.append("phone_number", form.phone_number);
-  formData.append("contents", form.contents);
-  formData.append("image", form.image); // ✅ 이미지 파일
-for (let [key, value] of formData.entries()) {
-  console.log(`${key}:`, value);
-}
-
-  const token = localStorage.getItem("access_token");
-
+// 게시글 생성 (POST /posts/)
+export async function createPost(data) {
   return fetch(`${BASE_URL}posts/`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
   }).then(res => res.json());
 }
-
-
 
 // 게시글 수정 (PATCH /posts/{post_id})
 export async function updatePost(post_id, data) {
@@ -109,31 +88,31 @@ export async function deletePost(post_id) {
 }
 
 // --- Comment ---
-// 댓글 생성 (POST /comments)
+// 댓글 생성 (POST /comments/)
 export async function createComment(data) {
-  return fetch(`${BASE_URL}comments`, {
+  return fetch(`${BASE_URL}comments/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   }).then(res => res.json());
 }
 
-// 댓글 목록 조회 (GET /comments/{comments_id})
+// 댓글 목록 조회 (GET /comments/{comments_id}/)
 export async function fetchComments(comments_id) {
-  return fetch(`${BASE_URL}comments/${comments_id}`).then(res => res.json());
+  return fetch(`${BASE_URL}comments/${comments_id}/`).then(res => res.json());
 }
 
-// 댓글 상세 목록 조회 (GET /comments/{comment_id})
+// 댓글 상세 목록 조회 (GET /comments/{comment_id}/)
 export async function fetchCommentDetail(comment_id) {
-  return fetch(`${BASE_URL}comments/${comment_id}`).then(res => res.json());
+  return fetch(`${BASE_URL}comments/${comment_id}/`).then(res => res.json());
 }
 
-// 댓글 삭제 (DELETE /comments/{comment_id})
+// 댓글 삭제 (DELETE /comments/{comment_id/})
 export async function deleteComment(comment_id) {
-  return fetch(`${BASE_URL}comments/${comment_id}`, { method: "DELETE" });
+  return fetch(`${BASE_URL}comments/${comment_id}/`, { method: "DELETE" });
 }
 
-// 댓글 수정 (PATCH /comments/{comment_id})
+// 댓글 수정 (PATCH /comments/{comment_id/})
 export async function updateComment(comment_id, data) {
   return fetch(`${BASE_URL}comments/${comment_id}`, {
     method: "PATCH",
@@ -143,29 +122,29 @@ export async function updateComment(comment_id, data) {
 }
 
 // --- Favorite ---
-// 게시글 스크랩 생성 (POST /favorites)
+// 게시글 스크랩 생성 (POST /favorites/)
 export async function createFavorite(data) {
-  return fetch(`${BASE_URL}favorites`, {
+  return fetch(`${BASE_URL}favorites/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   }).then(res => res.json());
 }
 
-// 스크랩한 게시글 목록 조회 (GET /favorites)
+// 스크랩한 게시글 목록 조회 (GET /favorites/)
 export async function fetchFavorites() {
-  return fetch(`${BASE_URL}favorites`).then(res => res.json());
+  return fetch(`${BASE_URL}favorites/`).then(res => res.json());
 }
 
-// 게시글 스크랩 삭제 (DELETE /favorites/{favorite_id})
+// 게시글 스크랩 삭제 (DELETE /favorites/{favorite_id}/)
 export async function deleteFavorite(favorite_id) {
-  return fetch(`${BASE_URL}favorites/${favorite_id}`, { method: "DELETE" });
+  return fetch(`${BASE_URL}favorites/${favorite_id}/`, { method: "DELETE" });
 }
 
 // --- Notification ---
-// 알림 목록 조회 (GET /notifications)
+// 알림 목록 조회 (GET /notifications/)
 export async function fetchNotifications() {
-  return fetch(`${BASE_URL}notifications`).then(res => res.json());
+  return fetch(`${BASE_URL}notifications/`).then(res => res.json());
 }
 
 /*
