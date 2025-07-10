@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Loginform.css";
 import { loginUser } from "../api";
+import logo from '../assets/logo.png';
 
 function Loginform() {
   const [email, setEmail] = useState("");
@@ -44,7 +45,7 @@ function Loginform() {
 
   return (
     <div className="login-wrap">
-      <img src="/src/assets/logo.png" alt="logo" className="login-logo" />
+      <img src={logo} alt="logo" className="login-logo" />
       <form className="login-form" onSubmit={handleSubmit}>
         <input
           type="email"
