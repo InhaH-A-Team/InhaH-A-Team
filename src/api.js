@@ -124,14 +124,14 @@ export async function deletePost(post_id) {
 }
 
 // --- Comment ---
-export async function createComment(data) {
-  return fetch(`${BASE_URL}comments/`, {
+export async function createComment(post_id, contents) {
+  return fetch(`${BASE_URL}comments/${post_id}/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       ...getAuthHeader(),
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ post: post_id, contents }),
   }).then(res => res.json());
 }
 

@@ -42,8 +42,17 @@ function Details() {
   }, [id]);
 
   const handleAddComment = async (text) => {
-    const newComment = await createComment({ post: id, text });
-    setComments(prev => [...prev, newComment]);
+    try {
+      console.log('댓글 등록 시 post id:', id, '내용:', text);
+      const response = await createComment(id, text);
+      console.log('댓글 등록 응답:', response);
+      // 댓글 등록 후 목록 새로고침
+      const updatedComments = await fetchComments(id);
+      setComments(Array.isArray(updatedComments) ? updatedComments : []);
+    } catch (error) {
+      alert('댓글 등록에 실패했습니다. 다시 시도해 주세요.');
+      console.error('댓글 등록 에러:', error);
+    }
   };
 
   const handleDeleteComment = async (commentId) => {
