@@ -13,24 +13,40 @@ const getImageUrl = (photo) => {
   if (photo.startsWith('http')) return photo;
   return `${BASE_URL}${photo}`;
 };
+function isTokenExpired() {
+  const token = localStorage.getItem("access_token");
+  if (!token) return true;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const now = Math.floor(Date.now() / 1000);
+    return now >= payload.exp;
+  } catch {
+    return true;
+  }
+}
 
 function Details() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("access_token");
   const { id } = useParams();
   const [animal, setAnimal] = useState(null);
   const [comments, setComments] = useState([]);
-  const navigate = useNavigate();
-
-
   const currentUserId = localStorage.getItem("user_id");
-  const isAuthor = String(currentUserId) === String(animal?.user);
+  
 
   useEffect(() => {
-    // 📌 post 객체 안에 진짜 데이터 있음
+    let isMounted = true;
+    if (!token || isTokenExpired()) {
+     if(isMounted){
+       alert("로그인이 필요합니다.");
+      navigate('/login');
+     }
+    return;
+  }
+
     fetchPostDetail(id).then(res => {
-      console.log("📦 Post detail API 응답:", res);
+      if (!isMounted) return;
       if (res && res.post) {
-        console.log("post 객체 구조:", res.post);
-        // id가 없으면 라우터의 id라도 강제로 넣어줌
         const postObj = { ...res.post };
         postObj.id = res.post.id || res.post.post_id || res.post.pk || id;
         setAnimal(postObj);
@@ -44,8 +60,16 @@ function Details() {
       console.log("💬 Comments API 응답:", res);
       setComments(Array.isArray(res) ? res : []);
     });
+
+    return () => {
+    isMounted = false;
+  };
+  
   }, [id]);
 
+      if (!animal) return null;
+
+    const isAuthor = String(currentUserId) === String(animal?.user);
   const handleAddComment = async (text) => {
     try {
       console.log('댓글 등록 시 post id:', id, '내용:', text);
@@ -99,9 +123,7 @@ function Details() {
     }
   };
 
-  if (!animal) {
-    return navigate('/login');
-  }
+
   return (
     <div className="details-container">
       <Nav />
