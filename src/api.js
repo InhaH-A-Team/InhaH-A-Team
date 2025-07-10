@@ -1,4 +1,4 @@
-const BASE_URL = "http://youyeon.p-e.kr/";
+const BASE_URL = "https://youyeon.p-e.kr/";
 
 // --- User ---
 // 회원가입 요청 (POST /users/signup)
@@ -45,11 +45,30 @@ export async function updateUserInfo(data) {
 
 // --- Post ---
 // 게시글 생성 (POST /posts/)
-export async function createPost(data) {
+export async function createPost(form) {
+  const formData = new FormData();
+  formData.append("title", form.title);
+  formData.append("species", form.species);
+  formData.append("gender", form.gender);
+  formData.append("age", form.age);
+  formData.append("health_status", form.health_status);
+  formData.append("provider_type", form.provider_type);
+  formData.append("address", form.address);
+  formData.append("phone_number", form.phone_number);
+  formData.append("contents", form.contents);
+  formData.append("photo", form.image); // ✅ 이미지 파일
+for (let [key, value] of formData.entries()) {
+  console.log(`${key}:`, value);
+}
+
+  const token = localStorage.getItem("access_token");
+
   return fetch(`${BASE_URL}posts/`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
   }).then(res => res.json());
 }
 
