@@ -23,6 +23,7 @@
   font-weight: bold;
   color: #F9F8F6;
   text-decoration: none;
+  margin-top: -10px
 }
 
 .nav-item, .user-nickname {
