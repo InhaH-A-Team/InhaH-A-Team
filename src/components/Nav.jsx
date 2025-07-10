@@ -71,7 +71,7 @@ function Nav() {
         ) : (
           <div className="nav-user-wrapper">
             <div className="nav-item user-nickname" onClick={() => setShowDropdown(!showDropdown)}>
-              유림
+                         {user.nick_name}
             </div>
             {showDropdown && (
               <div className="dropdown-box">
