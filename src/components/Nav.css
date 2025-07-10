@@ -5,18 +5,19 @@
   right: 0;
   z-index: 1000;
   background-color: #716A5C;
+
   font-family: 'Katibeh', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 0.5rem 1rem;
-  height: 60px;
+  height: 60px; /* 로고 크기에 맞게 조정 */
 }
-/**/
 
 .nav-left, .nav-right {
   display: flex;
-  align-items: center;
+  align-items: center;  
 }
 
 .nav-logo {
@@ -27,31 +28,20 @@
   margin-top: -10px
 }
 
-.nav-item, .user-nickname {
-  font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', Arial, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 600;
+.nav-item {
+  margin-left: 4rem;
+  font-size: 2rem;
   color: #F9F8F6;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 0 16px;
-  transition: color 0.13s, background 0.13s;
-  border-radius: 8px;
   text-decoration: none;
-  height: 40px;
-  display: flex;
-  align-items: center;
+  cursor: pointer;
 }
 
-.nav-item:hover, .user-nickname:hover {
-  color: #716A5C;
-  background: #F9F8F6;
+.nav-item:hover, .nav-logo:hover {
+  color:#C3BCA3;
 }
 
 .nav-logo-img {
-  height: 70px;
+  height: 70px;         /* 필요시 100px로 키우기 가능 */
   object-fit: contain;
   margin-top: 27px;
 }
@@ -77,8 +67,8 @@
 
 .dropdown-nickname-row {
   font-weight: bold;
-  color: #716A5C;
-  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .dropdown-email {
@@ -94,8 +84,4 @@
   cursor: pointer;
   font-size: 0.9rem;
   border-radius: 4px;
-}
-.dropdown-logout:hover {
-  background-color: #C3BCA3;
-  color: #716A5C;
 }
