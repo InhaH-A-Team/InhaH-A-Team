@@ -56,8 +56,24 @@ function Details() {
   };
 
   const handleDeleteComment = async (commentId) => {
-    await deleteComment(commentId);
-    setComments(prev => prev.filter(comment => comment.id !== commentId));
+    try {
+      const res = await deleteComment(commentId);
+      // 204 No Content: 성공
+      if (res.status === 204) {
+        setComments(prev => prev.filter(comment => comment.id !== commentId));
+      } else {
+        // 실패 응답(json) 파싱
+        const data = await res.json();
+        if (data && data.error) {
+          alert(data.error);
+        } else {
+          alert('댓글 삭제에 실패했습니다.');
+        }
+      }
+    } catch (error) {
+      alert('댓글 삭제 중 오류가 발생했습니다.');
+      console.error('댓글 삭제 에러:', error);
+    }
   };
 
   if (!animal) {
@@ -93,11 +109,25 @@ function Details() {
               <div>성별: {animal.gender}</div>
               <div>종: {animal.species}</div>
               <div>지역: {animal.address}</div>
-              <div><b>전화번호: {animal.phone_number || '-'}</b></div>
             </div>
           </div>
           <div className="details-main-content">
-            {animal.contents}
+            <div style={{ marginBottom: '10px', color: '#555' }}>
+              <strong>작성자:</strong> {animal.user_nickname || '익명'}
+            </div>
+            <div style={{ marginBottom: '10px', color: '#555' }}>
+              <strong>전화번호:</strong> {animal.phone_number || '-'}
+            </div>
+            <div style={{ marginBottom: '10px', color: '#555' }}>
+              <strong>제공자 유형:</strong> {animal.provider_type || '-'}
+            </div>
+            <div style={{ marginBottom: '10px', color: '#555' }}>
+              <strong>건강상태:</strong> {animal.health_status || '-'}
+            </div>
+            <div style={{ marginBottom: '10px', color: '#222' }}>
+              <strong>내용:</strong><br />
+              {animal.contents}
+            </div>
           </div>
         </div>
         <div className="comments-box">
