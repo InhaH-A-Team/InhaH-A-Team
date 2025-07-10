@@ -45,7 +45,6 @@ function NotificationDropdown() {
   return (
     <div className="notification-dropdown" ref={dropdownRef}>
       <button className="notification-btn" onClick={() => setOpen(o => !o)}>
-        {/* SVG 벨 아이콘으로 변경 가능 */}
         <svg
           width="24" height="24"
           viewBox="0 0 24 24"

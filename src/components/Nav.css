@@ -6,6 +6,7 @@
   z-index: 1000;
   background-color: #716A5C;
 
+  font-family: 'Katibeh', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,7 +68,6 @@
   font-weight: bold;
   display: flex;
   justify-content: space-between;
-
 }
 
 .dropdown-email {
