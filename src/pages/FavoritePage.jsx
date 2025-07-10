@@ -35,7 +35,6 @@ function FavoritePage() {
             const postId = fav.post_id || fav.post || fav.id;
             try {
               const detail = await fetchPostDetail(postId);
-              // detail.post가 있으면 그걸, 아니면 전체를 반환
               return { ...fav, ...(detail.post || detail), postId };
             } catch {
               return { ...fav, postId };
@@ -52,7 +51,7 @@ function FavoritePage() {
     <div>
       <Nav />
       <div className="favorite-page-container">
-        <h2>즐겨찾기한 게시글</h2>
+        <div className="favorite-page-title-box">즐겨찾기한 게시글</div>
         {loading ? (
           <div className="favorite-page-empty">로딩 중...</div>
         ) : favorites.length === 0 ? (
@@ -62,21 +61,25 @@ function FavoritePage() {
             {favorites.map(item => (
               <div
                 className="favorite-card"
-                key={item.id || item.postId}
-                onClick={() => navigate(`/details/${item.id || item.postId}`)}
+                key={item.post_id || item.postId || item.id}
+                onClick={() => navigate(`/details/${item.post_id || item.postId || item.id}`)}
               >
-                <div className="favorite-card-image">
-                  {item.photo ? (
-                    <img src={getImageUrl(item.photo)} alt="동물" />
-                  ) : (
-                    <div className="favorite-card-noimg">이미지 없음</div>
-                  )}
+                <div className="favorite-card-image-wrap">
+                  <div className="favorite-card-image">
+                    {item.photo ? (
+                      <img src={getImageUrl(item.photo)} alt="동물" />
+                    ) : (
+                      <div className="favorite-card-noimg">이미지 없음</div>
+                    )}
+                    <div className="favorite-card-title-overlay">
+                      <span>{item.title || `게시글 ${item.id || item.postId}`}</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="favorite-card-content">
-                  <h3>{item.title || `게시글 ${item.id || item.postId}`}</h3>
-                  <div>종: {item.species || '-'}</div>
-                  <div>지역: {item.address || '-'}</div>
-                  <div>작성자: {item.writer || '-'}</div>
+                  <div className="favorite-card-info-row"><span>종</span> <b>{item.species || '-'}</b></div>
+                  <div className="favorite-card-info-row"><span>지역</span> <b>{item.address || '-'}</b></div>
+                  <div className="favorite-card-info-row"><span>작성자</span> <b>{item.writer || '-'}</b></div>
                 </div>
               </div>
             ))}

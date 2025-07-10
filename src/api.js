@@ -173,21 +173,15 @@ export async function updateComment(comment_id, data) {
 
 // --- Favorite ---
 export async function createFavorite(post_id) {
-  console.log("즐겨찾기 생성 API 호출 - post_id:", post_id);
+  console.log('createFavorite body:', JSON.stringify({ post: post_id }));
   return fetch(`${BASE_URL}favorites/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       ...getAuthHeader(),
     },
-    body: JSON.stringify({ post_id: post_id }), // 서버 요구사항에 맞게 수정
-  }).then(res => {
-    console.log("즐겨찾기 생성 응답 상태:", res.status);
-    return res.json().then(data => {
-      console.log("즐겨찾기 생성 응답 데이터:", data);
-      return data;
-    });
-  });
+    body: JSON.stringify({ post: post_id }), // 서버 요구사항에 맞게 수정
+  }).then(res => res.json());
 }
 
 export async function fetchFavorites() {
