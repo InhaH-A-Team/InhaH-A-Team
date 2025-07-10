@@ -62,16 +62,16 @@ function Nav() {
       </div>
 
       <div className="nav-right">
-        <Link to="/about" className="nav-item">About us</Link>
+        <Link to="/about" className="nav-item">소개</Link>
         <span className="nav-item" onClick={handleFavoriteClick}>즐겨찾기</span>
-        <span className="nav-item" onClick={() => handleProtectedClick("/write")}>write</span>
+        <span className="nav-item" onClick={() => handleProtectedClick("/write")}>글쓰기</span>
 
         {user===null ? (
-          <Link to="/login" className="nav-item">login</Link>
+          <Link to="/login" className="nav-item">로그인</Link>
         ) : (
           <div className="nav-user-wrapper">
             <div className="nav-item user-nickname" onClick={() => setShowDropdown(!showDropdown)}>
-              {user.nick_name}
+              유림
             </div>
             {showDropdown && (
               <div className="dropdown-box">
