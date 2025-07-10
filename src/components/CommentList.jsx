@@ -12,8 +12,12 @@ function CommentList({ comments, onDelete }) {
         return (
           <div className="details-comment" key={comment.id}>
             <div className="comment-meta">
-              <span className="comment-author">{comment.user?.nick_name || '익명'}</span>
-              <span className="comment-date">{comment.create_at ? comment.create_at.slice(0, 16).replace('T', ' ') : ''}</span>
+              <span className="comment-author" style={{ marginRight: '12px', fontWeight: 'bold' }}>
+                {comment.user_nickname || '익명'}
+              </span>
+              <span className="comment-date" style={{ color: '#888', fontSize: '0.95em' }}>
+                {comment.create_at ? comment.create_at.slice(0, 16).replace('T', ' ') : ''}
+              </span>
             </div>
             <div className="comment-text">{comment.contents}</div>
             <button

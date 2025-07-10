@@ -152,7 +152,7 @@ export async function fetchCommentDetail(comment_id) {
 }
 
 export async function deleteComment(comment_id) {
-  return fetch(`${BASE_URL}comments/${comment_id}/`, {
+  return fetch(`${BASE_URL}comments/detail/${comment_id}/`, {
     method: "DELETE",
     headers: {
       ...getAuthHeader(),
@@ -161,7 +161,7 @@ export async function deleteComment(comment_id) {
 }
 
 export async function updateComment(comment_id, data) {
-  return fetch(`${BASE_URL}comments/${comment_id}`, {
+  return fetch(`${BASE_URL}comments/${comment_id}/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
